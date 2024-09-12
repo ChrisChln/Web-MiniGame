@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜数字游戏</title>
+    <link rel="stylesheet" href="GuessingNumber.css"> <!-- 引入 CSS 文件 -->
+</head>
+<body>
+    <div class="icon">
+        <a href="/Mainpage/Mainpage_index.html">
+            <img src="Image/home copy.png" alt="HomePage"> <!-- 确保有合适的图标 -->
+        </a>
+    </div>
+    <div class="game-container">
+        <h1>猜数字游戏</h1>
+        <p>猜一个 1 到 100 之间的数字</p>
+        <input type="number" id="guessInput" placeholder="输入你的猜测"> <!-- 用户输入猜测的数字 -->
+        <button onclick="checkGuess()">提交猜测</button> <!-- 按钮点击时调用 checkGuess 函数 -->
+        <div id="message" class="message-container"></div> <!-- 显示所有消息的区域 -->
+        <h2>已输入的数字：</h2>
+        <div id="guessList" class="guess-list"></div>
+    </div>
+    <script src="GuessingNumber.js"></script> <!-- 引入 JavaScript 文件 -->
+</body>
+</html>

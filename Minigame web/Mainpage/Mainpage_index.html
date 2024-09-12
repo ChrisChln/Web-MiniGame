@@ -1,0 +1,70 @@
+<!-- Mainpage_index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minigame</title>
+    <link rel="stylesheet" href="Mainpage_style.css">
+    
+</head>
+<body>
+    <div class="sidebar">
+        <div class="icon home">
+            <!-- 去掉 href，使用 onclick 动态加载内容 -->
+            <a href="#" onclick="loadContent('Homepage.html')">
+                <img src="Image/menu-icon.png" alt="Home">
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('game.html')">
+                <img src="Image/game-controller.png" alt="Game">
+                <h3>Game</h3>
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('search.html')">
+                <img src="Image/search.png" alt="Search">
+                <h3>Search</h3>
+            </a>
+        </div>
+        
+        <div class="icon">
+            <a href="#" onclick="loadContent('ranking.html')">
+                <img src="Image/ranking.png" alt="Ranking">
+                <h3>Ranking</h3>
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('settings.html')">
+                <img src="Image/setting.png" alt="Settings">
+                <h3>Settings</h3>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <!-- 动态加载的内容会显示在这里 -->
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function loadContent(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('main-content').innerHTML = html;
+                })
+                .catch(error => {
+                    console.warn('Error loading content:', error);
+                });
+        }
+
+        // 初始加载首页内容
+        loadContent('Homepage.html');
+    </script>
+</body>
+</html>

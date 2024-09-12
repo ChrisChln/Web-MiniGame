@@ -1,0 +1,64 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif; /* 设置字体 */
+    display: flex; /* 使用 flexbox 布局 */
+    justify-content: center; /* 水平居中对齐 */
+    align-items: center; /* 垂直居中对齐 */
+    height: 100vh; /* 高度占满整个视口 */
+    margin: 0; /* 去掉默认的边距 */
+    background-color: #ffd1fc; /* 背景颜色 */
+}
+
+.icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+}
+
+.icon img{
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+
+}
+
+.game-container {
+    text-align: center; /* 文本居中对齐 */
+    padding: 20px; /* 内边距 */
+    border: 2px solid #333; /* 边框 */
+    border-radius: 10px; /* 边框圆角 */
+    background-color: #ffffff; /* 背景颜色 */
+}
+
+input {
+    padding: 10px; /* 内边距 */
+    font-size: 16px; /* 字体大小 */
+    margin-bottom: 10px; /* 下边距 */
+}
+
+button {
+    padding: 10px 20px; /* 内边距 */
+    font-size: 16px; /* 字体大小 */
+    cursor: pointer; /* 鼠标悬停时显示为手形光标 */
+}
+
+.message-container {
+    margin-top: 10px; /* 上边距 */
+    font-size: 18px; /* 字体大小 */
+    border: 1px solid #ddd; /* 边框 */
+    padding: 10px; /* 内边距 */
+    border-radius: 5px; /* 边框圆角 */
+    background-color: #f9f9f9; /* 背景颜色 */
+    min-height: 50px; /* 最小高度 */
+}
+
+.guess-list {
+    margin-top: 10px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    min-height: 50px;
+}
