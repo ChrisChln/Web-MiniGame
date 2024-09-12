@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            min-width: 100vw;
+            min-height: 100vh;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, rgb(185, 43, 39), rgb(21, 101, 192));
+        }
+
+        .game-title {
+            color: rgb(219, 211, 253);
+            text-align: center;
+            font-size: 75px;
+            font-weight: normal;
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(4, 150px); /* Adjusted for 4 columns */
+            gap: 10px;
+            justify-content: center;
+            perspective: 1000px; /* Ensure 3D effect is visible */
+            margin-top: 20px; /* Add some margin at the top */
+        }
+
+        .game-info-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px; /* Add some margin at the bottom */
+            color: rgb(218, 255, 255);
+            font-size: 3em;
+        }
+
+        .card {
+            position: relative;
+            height: 175px;
+            width: 125px;
+            transform-style: preserve-3d; /* Preserve 3D space for child elements */
+            transition: transform 0.6s; /* Smooth transition for flip effect */
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg); /* Rotate card on flip */
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 12px;
+            border-width: 1px;
+            border-style: solid;
+            backface-visibility: hidden; /* Hide back face when flipped */
+        }
+
+        .card-back {
+            background-color: white;
+            border-color: rgb(31, 43, 54);
+            transform: rotateY(0deg); /* Default state */
+        }
+
+        .card-front {
+            background-color: rgb(215, 202, 202);
+            border-color: rgb(0, 0, 0);
+            transform: rotateY(180deg); /* Hidden initially */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 5em;
+            position: absolute; /* Ensure both faces are on top of each other */
+        }
+
+        .card-front .number {
+            font-size: 2rem;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .card-front .suit {
+            font-size: 3rem;
+        }
+
+        .cobweb {
+            position: absolute;
+            width: 63px;
+            height: 63px;
+            transition: width 100ms ease-in-out, height 100ms ease-in-out;
+        }
+
+        .card-face:hover .cobweb {
+            width: 55px;
+            height: 55px;
+        }
+
+        .cobweb-top-left {
+            top: 0;
+            left: 0;
+            transform: rotate(270deg);
+        }
+
+        .cobweb-top-right {
+            top: 0;
+            right: 0;
+            transform: rotate(0deg);
+        }
+
+        .cobweb-bottom-left {
+            bottom: 0;
+            left: 0;
+            transform: rotate(180deg);
+        }
+
+        .cobweb-bottom-right {
+            bottom: 0;
+            right: 0;
+            transform: rotate(90deg);
+        }
+
+        .spider {
+            position: absolute;
+            width: 120px; /* Adjust width as needed */
+            height: auto; /* Maintain aspect ratio */
+            z-index: 1; /* Ensure spider is on top of the card */
+            transition: width 0.3s, height 0.3s; /* Ensure smooth resizing */
+        }
+
+        .card-back:hover .spider {
+            width: 170px;
+            height: 170px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="game-title">Card Game</h1>
+    <div class="game-info-container">
+        <div class="game-info-info">
+            Time: <span id="remainingtime" class="time-remaining">30</span>
+        </div>
+        <div class="game-info-info">
+            Click: <span id="clickcount" class="click-count">0</span>
+        </div>
+    </div>
+    <div class="game-container" id="game-container">
+        <!-- Cards will be dynamically inserted here -->
+    </div>
+
+    <script>
+        const suits = ['♥', '♠', '♦', '♣'];
+        const numbers = ['A', '2', '3', '4'];
+
+        // Generate a deck with 4 pairs of 4 different numbers and suits
+        function generateDeck() {
+            const deck = [];
+            for (let i = 0; i < numbers.length; i++) {
+                for (let j = 0; j < suits.length; j++) {
+                    deck.push({ number: numbers[i], suit: suits[j] });
+                    deck.push({ number: numbers[i], suit: suits[j] }); // Pair
+                }
+            }
+            return deck;
+        }
+
+        // Shuffle the deck
+        function shuffleDeck(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+        }
+
+        // Initialize the game
+        function initializeGame() {
+            const deck = generateDeck();
+            shuffleDeck(deck);
+            const gameContainer = document.getElementById('game-container');
+            gameContainer.innerHTML = ''; // Clear any existing cards
+
+            deck.slice(0, 8).forEach(card => { // Select only 8 cards
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.innerHTML = `
+                    <div class="card-back card-face">
+                        <img class="cobweb cobweb-top-left" src="Image/cobweb.png" alt="Cobweb">
+                        <img class="cobweb cobweb-top-right" src="Image/cobweb.png" alt="Cobweb">
+                        <img class="cobweb cobweb-bottom-left" src="Image/cobweb.png" alt="Cobweb">
+                        <img class="cobweb cobweb-bottom-right" src="Image/cobweb.png" alt="Cobweb">
+                        <img class="spider" src="Image/spider.png" alt="Spider">
+                    </div>
+                    <div class="card-front card-face">
+                        <div class="number">${card.number}</div>
+                        <div class="suit">${card.suit}</div>
+                    </div>
+                `;
+                gameContainer.appendChild(cardElement);
+            });
+        }
+
+        initializeGame();
+
+        let flippedCards = [];
+        let clickCount = 0;
+        const clickCountElement = document.getElementById('clickcount');
+
+        document.getElementById('game-container').addEventListener('click', function (event) {
+            const card = event.target.closest('.card');
+            if (card && !card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                flippedCards.push(card);
+                clickCount++;
+                clickCountElement.textContent = clickCount;
+
+                if (flippedCards.length === 2) {
+                    setTimeout(() => {
+                        if (flippedCards[0].innerHTML === flippedCards[1].innerHTML) {
+                            flippedCards = [];
+                        } else {
+                            flippedCards.forEach(card => card.classList.remove('flipped'));
+                            flippedCards = [];
+                        }
+                    }, 1000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
