@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Collection</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <header>
+        <h1>Game Collection Hub</h1>
+        <nav>
+            <a href="Homepage.html">Home</a>
+            <a href="game.html">Games</a>
+            <a href="ranking.html">Ranking</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+    </header>
+    
+    <div class="main-content">
+        <section class="filter">
+            <h2>Filter by Category</h2>
+            <div class="filters">
+                <button class="filter-btn" data-category="all">All</button>
+                <button class="filter-btn" data-category="puzzle">Puzzle</button>
+                <button class="filter-btn" data-category="memory">Memory</button>
+                <button class="filter-btn" data-category="strategy">Strategy</button>
+            </div>
+        </section>
+
+        <section class="games">
+            <h2>Featured Games</h2>
+            <div class="game-list">
+                <div class="game-item" data-category="puzzle">
+                    <h3>Guessing Number</h3>
+                    <img src="guessing-number-thumb.jpg" alt="Guessing Number Game">
+                    <p>Test your luck and skill in this fun guessing game. Can you guess the number?</p>
+                    <a href="GuessingNumber.html" class="btn">Play Now</a>
+                </div>
+                <div class="game-item" data-category="memory">
+                    <h3>Memory Match</h3>
+                    <img src="memory-match-thumb.jpg" alt="Memory Match Game">
+                    <p>Improve your memory by matching pairs of cards. How many can you find?</p>
+                    <a href="MemoryMatch.html" class="btn">Play Now</a>
+                </div>
+                <div class="game-item" data-category="strategy">
+                    <h3>2048 Challenge</h3>
+                    <img src="2048-thumb.jpg" alt="2048 Game">
+                    <p>Join the numbers and get to the 2048 tile! Can you reach the highest score?</p>
+                    <a href="2048.html" class="btn">Play Now</a>
+                </div>
+                <!-- Add more game items here -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Game Collection Hub. All rights reserved.</p>
+    </footer>
+
+    <script src="game.js"></script>
+</body>
+</html>

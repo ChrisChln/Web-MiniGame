@@ -51,10 +51,15 @@
             width: 125px;
             transform-style: preserve-3d; /* Preserve 3D space for child elements */
             transition: transform 0.6s; /* Smooth transition for flip effect */
+            cursor: pointer; /* Add cursor pointer for interactivity */
         }
 
         .card.flipped {
             transform: rotateY(180deg); /* Rotate card on flip */
+        }
+
+        .card.face-up {
+            pointer-events: none; /* Prevent interaction with matched cards */
         }
 
         .card-face {
@@ -72,13 +77,13 @@
         }
 
         .card-back {
-            background-color: white;
+            background: linear-gradient(to right, rgb(246, 249, 255), rgb(232, 155, 244));
             border-color: rgb(31, 43, 54);
             transform: rotateY(0deg); /* Default state */
         }
 
         .card-front {
-            background-color: rgb(215, 202, 202);
+            background: linear-gradient(to right, rgb(255, 255, 255), rgb(243, 104, 88), rgb(255, 255, 255));
             border-color: rgb(0, 0, 0);
             transform: rotateY(180deg); /* Hidden initially */
             display: flex;
@@ -148,13 +153,71 @@
             width: 170px;
             height: 170px;
         }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .notification {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification.add-time {
+            background-color: rgba(0, 255, 0, 0.8);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .notification.remove-time {
+            background-color: rgba(255, 0, 0, 0.8);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .back-to-home img {
+            width: 40px; /* Adjust the size as needed */
+            height: 40px;
+        }
+
     </style>
 </head>
 <body>
+    <div class="back-to-home">
+        <a href="/Mainpage/Mainpage_index.html">
+            <img src="Image/home.png" alt="Back to Homepage" />
+        </a>
+    </div>
+    
     <h1 class="game-title">Card Game</h1>
     <div class="game-info-container">
         <div class="game-info-info">
-            Time: <span id="remainingtime" class="time-remaining">30</span>
+            Time: <span id="remainingtime" class="time-remaining">--</span>
         </div>
         <div class="game-info-info">
             Click: <span id="clickcount" class="click-count">0</span>
@@ -163,24 +226,40 @@
     <div class="game-container" id="game-container">
         <!-- Cards will be dynamically inserted here -->
     </div>
+    <button id="start-button">Start Game</button>
+    <button id="restart-button" class="hidden">Restart Game</button>
+    <div id="notification" class="notification"></div>
 
     <script>
         const suits = ['♥', '♠', '♦', '♣'];
         const numbers = ['A', '2', '3', '4'];
+        const gameDuration = 30; // Duration in seconds
 
-        // Generate a deck with 4 pairs of 4 different numbers and suits
+        let timer;
+        let remainingTime = gameDuration;
+        let timerStarted = false;
+        let gameStarted = false;
+        let flippedCards = []; // Array to keep track of flipped cards
+
         function generateDeck() {
             const deck = [];
+            const numberCounts = new Map();
+            for (let i = 0; i < numbers.length; i++) {
+                numberCounts.set(numbers[i], 0);
+            }
+
             for (let i = 0; i < numbers.length; i++) {
                 for (let j = 0; j < suits.length; j++) {
-                    deck.push({ number: numbers[i], suit: suits[j] });
-                    deck.push({ number: numbers[i], suit: suits[j] }); // Pair
+                    if (numberCounts.get(numbers[i]) < 2) {
+                        deck.push({ number: numbers[i], suit: suits[j] });
+                        numberCounts.set(numbers[i], numberCounts.get(numbers[i]) + 1);
+                    }
                 }
             }
+
             return deck;
         }
 
-        // Shuffle the deck
         function shuffleDeck(deck) {
             for (let i = deck.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -188,16 +267,17 @@
             }
         }
 
-        // Initialize the game
         function initializeGame() {
             const deck = generateDeck();
             shuffleDeck(deck);
             const gameContainer = document.getElementById('game-container');
             gameContainer.innerHTML = ''; // Clear any existing cards
 
-            deck.slice(0, 8).forEach(card => { // Select only 8 cards
+            deck.forEach(card => {
                 const cardElement = document.createElement('div');
                 cardElement.className = 'card';
+                cardElement.dataset.number = card.number; // Store number for comparison
+                cardElement.dataset.suit = card.suit; // Store suit for comparison
                 cardElement.innerHTML = `
                     <div class="card-back card-face">
                         <img class="cobweb cobweb-top-left" src="Image/cobweb.png" alt="Cobweb">
@@ -211,35 +291,91 @@
                         <div class="suit">${card.suit}</div>
                     </div>
                 `;
+                cardElement.addEventListener('click', handleCardClick);
                 gameContainer.appendChild(cardElement);
             });
         }
 
-        initializeGame();
+        function handleCardClick(event) {
+            if (!gameStarted || flippedCards.length >= 2) return;
 
-        let flippedCards = [];
-        let clickCount = 0;
-        const clickCountElement = document.getElementById('clickcount');
+            const card = event.currentTarget;
+            if (card.classList.contains('flipped') || card.classList.contains('face-up')) return;
 
-        document.getElementById('game-container').addEventListener('click', function (event) {
-            const card = event.target.closest('.card');
-            if (card && !card.classList.contains('flipped')) {
-                card.classList.add('flipped');
-                flippedCards.push(card);
-                clickCount++;
-                clickCountElement.textContent = clickCount;
+            card.classList.add('flipped');
+            flippedCards.push(card);
 
-                if (flippedCards.length === 2) {
-                    setTimeout(() => {
-                        if (flippedCards[0].innerHTML === flippedCards[1].innerHTML) {
-                            flippedCards = [];
-                        } else {
-                            flippedCards.forEach(card => card.classList.remove('flipped'));
-                            flippedCards = [];
-                        }
-                    }, 1000);
-                }
+            if (flippedCards.length === 2) {
+                setTimeout(checkForMatch, 1000);
             }
+        }
+
+        function checkForMatch() {
+            const [card1, card2] = flippedCards;
+
+            if (card1.dataset.number === card2.dataset.number) {
+                card1.classList.add('face-up');
+                card2.classList.add('face-up');
+                checkGameEnd();
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+            }
+
+            flippedCards = [];
+        }
+
+        function checkGameEnd() {
+            const totalCards = document.querySelectorAll('.card').length;
+            const faceUpCards = document.querySelectorAll('.card.face-up').length;
+
+            if (totalCards === faceUpCards) {
+                clearInterval(timer);
+                showNotification('Congratulations, you win!', 'success');
+                document.getElementById('restart-button').classList.remove('hidden');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show', type);
+            setTimeout(() => {
+                notification.classList.remove('show', type);
+            }, 2000);
+        }
+
+        function startTimer() {
+            if (timerStarted) return;
+            timerStarted = true;
+            timer = setInterval(() => {
+                remainingTime--;
+                document.getElementById('remainingtime').textContent = remainingTime;
+                if (remainingTime <= 0) {
+                    clearInterval(timer);
+                    showNotification('Time is up!', 'error');
+                    document.getElementById('restart-button').classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        document.getElementById('start-button').addEventListener('click', () => {
+            if (gameStarted) return;
+            gameStarted = true;
+            startTimer();
+            initializeGame();
+            document.getElementById('start-button').classList.add('hidden');
+        });
+
+        document.getElementById('restart-button').addEventListener('click', () => {
+            gameStarted = false;
+            flippedCards = [];
+            remainingTime = gameDuration;
+            document.getElementById('remainingtime').textContent = remainingTime;
+            document.getElementById('clickcount').textContent = '0';
+            document.getElementById('restart-button').classList.add('hidden');
+            initializeGame();
+            startTimer();
         });
     </script>
 </body>
