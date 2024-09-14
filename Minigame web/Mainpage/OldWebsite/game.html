@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Page</title>
+    <link rel="stylesheet" href="game.css"> <!-- 引入 CSS 文件 -->
+</head>
+<body>
+    <div class="game-container">
+        <h1>Game List</h1>
+        
+        <!-- Guessing Number Game Link -->
+        <a href="/GuessingNumber/GuessingNumber.html" class="game-link" onclick="loadGameContent()">
+            <div class="game-icon">
+                <img src="Image/79.png" alt="Guessing Number Game">
+            </div>
+            Guessing Number
+        </a>
+
+        <!-- Card Game Link -->
+        <a href="/CardGame/index.html" class="game-link">
+            <div class="game-icon">
+                <img src="Image/solitaire.png" alt="Card Game">
+            </div>
+            Spider Card
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function loadGameContent() {
+            fetch('GuessingNumber.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('main-content').innerHTML = html;
+                })
+                .catch(error => {
+                    console.warn('Error loading content:', error);
+                });
+        }
+    </script>
+</body>
+</html>

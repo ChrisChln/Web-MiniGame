@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToyBox</title>
+    <link rel="stylesheet" href="Mainpage_style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="icon home">
+            <a href="#" onclick="loadContent('Homepage.html')">
+                <img src="Image/menu-icon.png" alt="Home">
+
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('game.html')">
+                <img src="Image/game-controller.png" alt="Game">
+                <h3>Game</h3>
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('search.html')">
+                <img src="Image/search.png" alt="Search">
+                <h3>Search</h3>
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('ranking.html')">
+                <img src="Image/ranking.png" alt="Ranking">
+                <h3>Ranking</h3>
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('settings.html')">
+                <img src="Image/setting.png" alt="Settings">
+                <h3>Settings</h3>
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('Development.html')">
+                <img src="Image/friends.png" alt="Social Friends">
+                <h3>Social</h3>
+            </a>
+        </div>
+
+        <div class="icon">
+            <a href="#" onclick="loadContent('Development.html')">
+                <img src="Image/account.png" alt="Account">
+                <h3>Account</h3>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <!-- 动态加载的内容会显示在这里 -->
+    </div>
+    <!-- 更新提示框 -->
+<div id="update-notice" class="update-notice">
+    <div class="update-notice-content">
+        <span class="close">&times;</span>
+        <h2>Important notices</h2>
+        <p>This site is no longer updated, please visit our new site for the latest information and features.</p>
+        <a href="/Mainpage/HomePage/index.html" class="btn-visit-new-site">Visit new site</a>
+    </div>
+</div>
+
+
+    <script src="script.js"></script>
+    <script>
+        function loadContent(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('main-content').innerHTML = html;
+                })
+                .catch(error => {
+                    console.warn('Error loading content:', error);
+                });
+        }
+
+        // 初始加载首页内容
+        loadContent('Homepage.html');
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+        // 获取提示框和关闭按钮元素
+        var updateNotice = document.getElementById('update-notice');
+        var closeBtn = document.querySelector('.update-notice .close');
+
+        // 当用户访问页面时，显示提示框
+        updateNotice.style.display = 'block';
+
+        // 当用户点击关闭按钮时，隐藏提示框
+        closeBtn.onclick = function() {
+            updateNotice.style.display = 'none';
+        }
+
+        // 当用户点击提示框以外的区域时，隐藏提示框
+        window.onclick = function(event) {
+            if (event.target == updateNotice) {
+                updateNotice.style.display = 'none';
+            }
+        }
+    });
+
+    </script>
+</body>
+</html>

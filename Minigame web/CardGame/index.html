@@ -209,7 +209,7 @@
 </head>
 <body>
     <div class="back-to-home">
-        <a href="/Mainpage/Mainpage_index.html">
+        <a href="/Mainpage//HomePage/index.html">
             <img src="Image/home.png" alt="Back to Homepage" />
         </a>
     </div>
@@ -296,19 +296,26 @@
             });
         }
 
+        let clickCount = 0; // 初始化点击次数
+
         function handleCardClick(event) {
-            if (!gameStarted || flippedCards.length >= 2) return;
+        if (!gameStarted || flippedCards.length >= 2) return;
 
-            const card = event.currentTarget;
-            if (card.classList.contains('flipped') || card.classList.contains('face-up')) return;
+        const card = event.currentTarget;
+        if (card.classList.contains('flipped') || card.classList.contains('face-up')) return;
 
-            card.classList.add('flipped');
-            flippedCards.push(card);
+        card.classList.add('flipped');
+        flippedCards.push(card);
 
-            if (flippedCards.length === 2) {
-                setTimeout(checkForMatch, 1000);
-            }
-        }
+    // 增加点击次数
+    clickCount++;
+    document.getElementById('clickcount').textContent = clickCount; // 更新点击次数显示
+
+    if (flippedCards.length === 2) {
+        setTimeout(checkForMatch, 1000);
+    }
+}
+
 
         function checkForMatch() {
             const [card1, card2] = flippedCards;

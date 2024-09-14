@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toybox - Play</title>
+    <link rel="stylesheet" href="/Mainpage/HomePage/style.css">
+    <style>
+        /* 添加弹窗的 CSS 样式 */
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="site-header">
+        <div class="logo-search">
+            <div class="logo">
+                <img src="/Mainpage/Image/toyboxlogo.png" alt="Toybox Logo">
+            </div>
+            <div class="header-right">
+                <input type="text" placeholder="Search">
+                <button>Login</button>
+                <button>Setting</button>
+                <button>About</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 导航栏 -->
+    <div class="gamenav">
+        <nav>
+            <ul>
+                <li><a href="#"><img src="/Mainpage/Image/home.png" class="icon">Home</a></li>
+                <li><a href="#"><img src="/Mainpage/Image/game-controller.png" class="icon">Game</a></li>
+                <li><a href="#"><img src="/Mainpage/Image/ranking.png" class="icon">Rank</a></li>
+                <li><a href="#"><img src="/Mainpage/Image/history (1).png" class="icon">History</a></li>
+                <li><a href="#"><img src="/Mainpage/Image/heart (1).png" class="icon">Like</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- 主内容 -->
+    <main>
+        <section class="hero">
+            <h2>"Play. The best way to experience the games you love."</h2>
+            <p>Find your next adventure, explore new worlds, and enjoy the thrill of gaming—all in one place.</p>
+            <a href="#">Click on the 'Game' section to start playing!!</a>
+        </section>
+
+        <section class="gameplay">
+            <div class="player">
+                <img src="/Mainpage/Image/Olá - Playing Video Games.png" alt="Player 1">
+            </div>
+            <div class="player">
+                <img src="/Mainpage/Image/Olá - Playing Video Games (1).png" alt="Player 2">
+            </div>
+            <div class="player">
+                <img src="/Mainpage/Image/Olá - Playing Video Games (2).png" alt="Player 3">
+            </div>
+        </section>
+    </main>
+
+    <!-- 弹窗 -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Settings</h2>
+                     <!-- 添加访问旧页面的链接 -->
+        <a href="/Mainpage/OldWebsite/Mainpage_index.html" class="btn-old-page">Vist old page</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取弹窗和按钮元素
+            var modal = document.getElementById('settings-modal');
+            var btn = document.querySelector('.header-right button:nth-of-type(2)'); // 假设第二个按钮是“Setting”
+            var span = document.querySelector('.modal .close');
+            
+            // 当用户点击“Setting”按钮时，显示弹窗
+            btn.onclick = function() {
+                modal.style.display = 'block';
+            }
+
+            // 当用户点击关闭按钮时，隐藏弹窗
+            span.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            // 当用户点击弹窗以外的区域时，隐藏弹窗
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

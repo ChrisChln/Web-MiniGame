@@ -1,0 +1,30 @@
+/* Mainpage_style.css */
+
+/* 其他现有的样式代码 */
+
+.welcome-container {
+    text-align: center; /* 使内容居中对齐 */
+    margin-top: 50px; /* 距离顶部留出空间 */
+    padding: 20px;
+    background-color: #fff; /* 白色背景 */
+    border-radius: 10px; /* 圆角效果 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+}
+
+.welcome-container h1 {
+    font-size: 2.5rem; /* 较大的标题 */
+    color: #4a90e2; /* 使用与侧边栏一致的蓝色 */
+    margin-bottom: 20px;
+}
+
+.welcome-container p {
+    font-size: 1.2rem; /* 较大的段落字体 */
+    color: #333; /* 深灰色字体 */
+    line-height: 1.6; /* 舒适的行距 */
+    margin-bottom: 10px;
+}
+
+/* 如果需要，可以设置整个 body 的背景或其他全局样式 */
+body {
+    background-color: #f0f0f0; /* 浅灰色背景，与页面内容形成对比 */
+}

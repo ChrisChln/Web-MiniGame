@@ -1,0 +1,118 @@
+/* Mainpage_style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 80px;
+    height: 100vh;
+    background-color: #f4d5fd;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    position: fixed;
+}
+
+.icon {
+    margin-bottom: 20px; /* General spacing between icons */
+}
+
+.icon.home {
+    margin-bottom: 40px; /* Extra spacing for the home icon */
+}
+
+.icon a {
+    display: block;
+    text-align: center; /* Center align text under icons */
+}
+
+.icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.icon a {
+    text-decoration: none;
+}
+
+.icon h3 {
+    margin: 5px 0; /* Adjust margin for h3 text under icons */
+    font-size: 14px; /* Adjust font size as needed */
+    color: #fff; /* Text color */
+}
+
+.main-content {
+    margin-left: 80px; /* Adjust margin to match sidebar width */
+    padding: 20px;
+    flex: 1;
+}
+
+/* 更新提示框的样式 */
+.update-notice {
+    display: none; /* 默认不显示 */
+    position: fixed;
+    z-index: 1000; /* 确保提示框在其他内容之上 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6); /* 半透明黑色背景 */
+}
+
+.update-notice-content {
+    background-color: #ffffff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%; /* 根据需要调整宽度 */
+    max-width: 500px; /* 最大宽度 */
+    text-align: center;
+}
+
+.update-notice h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.update-notice p {
+    font-size: 18px;
+    color: #555;
+}
+
+.update-notice .btn-visit-new-site {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007bff; /* 按钮背景颜色 */
+    color: #fff; /* 按钮文字颜色 */
+    text-decoration: none; /* 去掉下划线 */
+    border-radius: 5px; /* 设置圆角 */
+    font-weight: bold; /* 设置粗体 */
+    transition: background-color 0.3s; /* 背景颜色变化的过渡效果 */
+}
+
+.update-notice .btn-visit-new-site:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+.update-notice .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.update-notice .close:hover,
+.update-notice .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
