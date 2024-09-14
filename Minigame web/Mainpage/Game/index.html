@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toybox - Play</title>
+    <link rel="stylesheet" href="/Mainpage/HomePage/style.css">
+    <style>
+        /* 添加弹窗的 CSS 样式 */
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="site-header">
+        <div class="logo-search">
+            <div class="logo">
+                <img src="/Mainpage/Image/toyboxlogo.png" alt="Toybox Logo">
+            </div>
+            <div class="header-right">
+                <input type="text" placeholder="Search">
+                <button>Login</button>
+                <button id="settings-btn">Setting</button>
+                <button>About</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 导航栏 -->
+    <div class="gamenav">
+        <nav>
+            <ul>
+                <li><a href="/Mainpage/HomePage/index.html"><img src="/Mainpage/Image/home.png" class="icon">Home</a></li>
+                <li><a href="/Mainpage/Game/" id="game-btn"><img src="/Mainpage/Image/game-controller.png" class="icon">Game</a></li>
+                <li><a href="#"><img src="/Mainpage/Image/ranking.png" class="icon">Rank</a></li>
+                <li><a href="#"><img src="/Mainpage/Image/history (1).png" class="icon">History</a></li>
+                <li><a href="#"><img src="/Mainpage/Image/heart (1).png" class="icon">Like</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- 主内容 -->
+    <main>
+        <div class="game-section">
+            <!-- 游戏分类 -->
+            <section class="game-category">
+                <h2>Game Categories</h2>
+                <ul>
+                    <li><a href="/games/category1.html">
+                        <span>Category 1</span>
+                    </a></li>
+                    <li><a href="/games/category2.html">
+                        <span>Category 2</span>
+                    </a></li>
+                    <li><a href="/games/category3.html">
+                        <span>Category 3</span>
+                    </a></li>
+                </ul>
+            </section>
+    
+            <!-- 游戏列表 -->
+            <section class="game-list">
+                <h2>Game List</h2>
+                <ul>
+                    <li><a href="/games/game1.html">
+                        <img src="/Mainpage/Image/toyboxlogo.png" alt="Game 1" class="game-icon">
+                        <span>Game 1</span>
+                    </a></li>
+                    <li><a href="/games/game2.html">
+                        <img src="/Mainpage/Image/toyboxlogo.png" alt="Game 2" class="game-icon">
+                        <span>Game 2</span>
+                    </a></li>
+                    <li><a href="/games/game3.html">
+                        <img src="/Mainpage/Image/toyboxlogo.png" alt="Game 3" class="game-icon">
+                        <span>Game 3</span>
+                    </a></li>
+                </ul>
+            </section>
+    
+            <!-- 最近更新 -->
+            <section class="recent-updates">
+                <h2>Recent Updates</h2>
+                <ul>
+                    <li><a href="/games/update1.html">
+                        <img src="/Mainpage/Image/toyboxlogo.png" alt="Update 1" class="update-icon">
+                        <span>Update 1</span>
+                    </a></li>
+                    <li><a href="/games/update2.html">
+                        <img src="/Mainpage/Image/toyboxlogo.png" alt="Update 2" class="update-icon">
+                        <span>Update 2</span>
+                    </a></li>
+                    <li><a href="/games/update3.html">
+                        <img src="/Mainpage/Image/toyboxlogo.png" alt="Update 3" class="update-icon">
+                        <span>Update 3</span>
+                    </a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <!-- 弹窗 -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Settings</h2>
+            <a href="/Mainpage/OldWebsite/Mainpage_index.html" class="btn-old-page">Visit old page</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取弹窗和按钮元素
+            var modal = document.getElementById('settings-modal');
+            var settingsBtn = document.getElementById('settings-btn');
+            var span = document.querySelector('.modal .close');
+            var gameBtn = document.getElementById('game-btn');
+            var gameContent = document.getElementById('game-content');
+
+            // 当用户点击“Setting”按钮时，显示弹窗
+            settingsBtn.onclick = function() {
+                modal.style.display = 'block';
+            }
+
+            // 当用户点击关闭按钮时，隐藏弹窗
+            span.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            // 当用户点击弹窗以外的区域时，隐藏弹窗
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // 当用户点击“Game”按钮时，加载 game.html 内容到页面
+            gameBtn.onclick = function() {
+                fetch('/Mainpage/Game/game.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        gameContent.innerHTML = data;
+                        gameContent.style.display = 'block'; // 显示游戏内容
+                    })
+                    .catch(error => console.error('Error loading game page:', error));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -233,3 +233,94 @@ main {
     background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
 }
 
+
+
+/* FOR GAME.HTML */
+/* 游戏部分容器 */
+.game-section {
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: space-between; /* 横向间距均匀分布 */
+    padding: 20px;
+    gap: 20px; /* 添加盒子之间的间隔 */
+
+}
+
+/* 每个游戏盒子的样式 */
+.game-category, .game-list, .recent-updates {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 30%; /* 设置宽度为 30% 以便横向排列 */
+    border: 1px solid #ddd; /* 添加边框用于调试 */
+    box-sizing: border-box; /* 包括 padding 和 border 在内的宽度计算 */
+    text-align: center;
+    
+}
+/* 确保内容居中对齐 */
+.game-category, .game-list, .recent-updates {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    justify-content: center; /* 垂直居中 */
+    align-items: center; /* 水平居中 */
+}
+
+/* 每个盒子标题的样式 */
+.game-category h2, .game-list h2, .recent-updates h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* 去掉默认的列表样式 */
+.game-category ul, .game-list ul, .recent-updates ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* 列表项的样式 */
+.game-category li, .game-list li, .recent-updates li {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* 链接的样式 */
+.game-category a, .game-list a, .recent-updates a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+/* 游戏分类图标、游戏图标和更新图标的样式 */
+.game-category .category-icon, .game-list .game-icon, .recent-updates .update-icon {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+    text-align: center;
+
+}
+
+/* 列表项文字的样式 */
+.game-category span, .game-list span, .recent-updates span {
+    font-size: 18px;
+}
+.game-category, .game-list, .recent-updates {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 30%; /* 设置宽度为 30% 以便横向排列 */
+    border: 1px solid #ddd; /* 添加边框用于调试 */
+    box-sizing: border-box; /* 包括 padding 和 border 在内的宽度计算 */
+    text-align: center; /* 确保文本水平居中 */
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    justify-content: flex-start; /* 垂直对齐方式 */
+    align-items: center; /* 水平对齐方式 */}
+
+/* GAME.HTML */
+
+
+
+

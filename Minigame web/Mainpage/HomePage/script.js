@@ -27,3 +27,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+var gameBtn = document.querySelector('nav ul li a[href="#game"]'); // 确保选择器匹配你的“Game”按钮
+var gameContent = document.getElementById('game-content');
+
+gameBtn.onclick = function() {
+    console.log('Game button clicked'); // 确保点击事件被触发
+    fetch('/Mainpage/Game/game.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.text();
+        })
+        .then(data => {
+            gameContent.innerHTML = data;
+            gameContent.style.display = 'block'; // 显示游戏内容
+        })
+        .catch(error => console.error('Error loading game page:', error));
+}
